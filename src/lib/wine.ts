@@ -27,12 +27,13 @@ export const DEFAULT_LAYERS: LayerState = {
   wineries: false,
 };
 
+/** Map fills — geographic encoding, not UI chrome. */
 export const REGION_COLORS: Record<string, string> = {
   Bordeaux: "#722F37",
   Burgundy: "#9B1B30",
   Beaujolais: "#9B1B30",
   Champagne: "#6B5344",
-  "Rhone": "#8B3A3A",
+  "Rhône": "#8B3A3A",
   Loire: "#3F6B54",
   Provence: "#A66A7A",
   "Languedoc-Roussillon": "#A05A3C",
@@ -133,7 +134,7 @@ export function featureToRegion(props: WineFeatureProps): AtlasRegion {
     "Burgundy",
     "Beaujolais",
     "Champagne",
-    "Rhone",
+    "Rhône",
     "Loire",
     "Provence",
     "Languedoc-Roussillon",
