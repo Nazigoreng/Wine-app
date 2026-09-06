@@ -66,10 +66,10 @@ function appellationStyle(feature?: Feature): PathOptions {
   const color = colorFor(props);
   return {
     fillColor: color,
-    weight: 1,
-    opacity: 0.9,
-    color: "#3a322e",
-    fillOpacity: 0.42,
+    weight: 0.9,
+    opacity: 0.8,
+    color: "#4A3F38",
+    fillOpacity: 0.5,
   };
 }
 
@@ -262,9 +262,9 @@ export function WineMap({
             prev.parent.resetStyle(prev.layer);
           }
           layer.setStyle({
-            weight: 3.5,
+            weight: 2.4,
             color: INK,
-            fillOpacity: opts.isLarge ? 0.18 : 0.62,
+            fillOpacity: opts.isLarge ? 0.2 : 0.78,
           });
           layer.bringToFront();
           selectedRef.current = { layer, parent };
@@ -296,11 +296,11 @@ export function WineMap({
                 const color = colorFor(props);
                 return {
                   fillColor: color,
-                  fillOpacity: 0.06,
-                  weight: 1.5,
-                  color,
+                  fillOpacity: 0.07,
+                  weight: 1.35,
+                  color: "#4A3F38",
                   opacity: 0.45,
-                  dashArray: "6 4",
+                  dashArray: "5 4",
                 };
               }
               return appellationStyle(feature as Feature);
@@ -316,6 +316,31 @@ export function WineMap({
                     ? italyRegRef.current
                     : franceRef.current;
                 if (parent) selectLayer(path, parent, opts);
+              });
+              path.on("mouseover", () => {
+                if (selectedRef.current?.layer === path) return;
+                path.setStyle({
+                  weight: opts.isLarge ? 2 : 1.7,
+                  fillOpacity: opts.isLarge ? 0.16 : 0.7,
+                });
+                path.bringToFront();
+              });
+              path.on("mouseout", () => {
+                if (selectedRef.current?.layer === path) return;
+                if (opts.isLarge) {
+                  const props = (path.feature?.properties || {}) as WineFeatureProps;
+                  const color = colorFor(props);
+                  path.setStyle({
+                    fillColor: color,
+                    fillOpacity: 0.07,
+                    weight: 1.35,
+                    color: "#4A3F38",
+                    opacity: 0.45,
+                    dashArray: "5 4",
+                  });
+                } else {
+                  path.setStyle(appellationStyle(path.feature));
+                }
               });
             },
           });

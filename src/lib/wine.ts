@@ -18,6 +18,7 @@ export type WineFeatureProps = {
 export type AtlasRegion = Region & {
   countryName: string;
   countryId: string;
+  parent?: string;
 };
 
 export const DEFAULT_LAYERS: LayerState = {
@@ -27,43 +28,43 @@ export const DEFAULT_LAYERS: LayerState = {
   wineries: false,
 };
 
-/** Map fills — geographic encoding, not UI chrome. */
+/** Map fills — De Long-style print pastels, not UI chrome. */
 export const REGION_COLORS: Record<string, string> = {
-  Bordeaux: "#722F37",
-  Burgundy: "#9B1B30",
-  Beaujolais: "#9B1B30",
-  Champagne: "#6B5344",
-  "Rhône": "#8B3A3A",
-  Loire: "#3F6B54",
-  Provence: "#A66A7A",
-  "Languedoc-Roussillon": "#A05A3C",
-  Alsace: "#4A7C59",
-  "Southwest (Dordogne)": "#6B4423",
-  Jura: "#6B5344",
-  Savoie: "#5A6570",
-  Bugey: "#5A6570",
-  Corsica: "#3D7A74",
-  France: "#722F37",
-  Piedmont: "#7A1F2B",
-  Tuscany: "#A05A3C",
-  Veneto: "#3F6B54",
-  Sicily: "#8A4A32",
-  Campania: "#9B1B30",
-  Lombardy: "#4A7C59",
-  "Friuli-Venezia Giulia": "#5B8C5A",
-  "Trentino-Alto Adige": "#5A6E3A",
-  Puglia: "#8B3A3A",
-  Abruzzo: "#8A5340",
-  "Emilia-Romagna": "#9A5A5A",
-  Marche: "#5F7A5F",
-  Umbria: "#556B2F",
-  Lazio: "#7A6540",
-  Sardinia: "#3D7A74",
-  Basilicata: "#6B4423",
-  Calabria: "#A05A3C",
-  Liguria: "#4A6B7A",
-  "Valle d'Aosta": "#5A6570",
-  Molise: "#8A6A6A",
+  Bordeaux: "#C46B74",
+  Burgundy: "#B5524A",
+  Beaujolais: "#C46B6B",
+  Champagne: "#D4C07A",
+  "Rhône": "#C57A52",
+  Loire: "#7A9A72",
+  Provence: "#D4A3B0",
+  "Languedoc-Roussillon": "#C9A06A",
+  Alsace: "#6B8F6E",
+  "Southwest (Dordogne)": "#B8895A",
+  Jura: "#A8946A",
+  Savoie: "#8A9AA8",
+  Bugey: "#8A9AA8",
+  Corsica: "#5E8F8A",
+  France: "#C46B74",
+  Piedmont: "#C45C68",
+  Tuscany: "#D4A05C",
+  Veneto: "#5E9A8E",
+  Sicily: "#E0C56A",
+  Campania: "#D4A07A",
+  Lombardy: "#7A9A7A",
+  "Friuli-Venezia Giulia": "#6B9A78",
+  "Trentino-Alto Adige": "#6A7A4A",
+  Puglia: "#D4B85C",
+  Abruzzo: "#C48A62",
+  "Emilia-Romagna": "#C47A7A",
+  Marche: "#7A8F6A",
+  Umbria: "#6A7B48",
+  Lazio: "#A8945A",
+  Sardinia: "#5E8F8A",
+  Basilicata: "#A07048",
+  Calabria: "#C48A5A",
+  Liguria: "#6A8A96",
+  "Valle d'Aosta": "#8A929C",
+  Molise: "#B8948A",
 };
 
 export const INK = "#1C1412";
@@ -161,6 +162,7 @@ export function featureToRegion(props: WineFeatureProps): AtlasRegion {
     desc: props.desc || matched?.desc || `${props.name}${props.region ? ` — ${props.region}` : ""}`,
     countryName: matched?.countryName || parent?.countryName || props.region || "Europe",
     countryId: matched?.countryId || parent?.countryId || (frenchParent ? "france" : "europe"),
+    parent: props.region || parent?.name,
   };
 }
 

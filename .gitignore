@@ -17,5 +17,3 @@ screenshots/
 .idea/
 coverage/
 *.tsbuildinfo
-
-public/__grok/

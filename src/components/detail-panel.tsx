@@ -3,6 +3,7 @@ import { Droplets, Mountain, Sun, X, Grape, Wine, MapPinned } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { QUALITY_LABEL, wineName, type AtlasRegion } from "@/lib/wine";
 import type { Country, WineNote } from "@/data/countries";
+import { artForRegion } from "@/data/region-art";
 import { cn } from "@/lib/utils";
 
 function Meter({ value, max = 5, label }: { value: number; max?: number; label: string }) {
@@ -97,6 +98,7 @@ export function DetailPanel({
 }) {
   const vines = region.vines ?? [];
   const wines = region.wines ?? [];
+  const art = artForRegion(region);
   return (
     <aside
       className={cn(
@@ -127,6 +129,15 @@ export function DetailPanel({
           >
             <X className="size-5" strokeWidth={1.75} />
           </Button>
+        </div>
+
+        <div className="relative aspect-[16/9] shrink-0 overflow-hidden border-b border-border bg-muted">
+          <img
+            src={art}
+            alt=""
+            className="size-full object-cover"
+            draggable={false}
+          />
         </div>
 
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-4">
