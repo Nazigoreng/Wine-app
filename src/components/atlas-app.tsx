@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronRight, Globe, Grape, Layers, Search, Wine, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DetailPanel, ExplorePanel } from "@/components/detail-panel";
+import { CountryHome } from "@/components/country-home";
 import { WineMap, type MapFocus } from "@/components/wine-map";
 import { countries } from "@/data/countries";
 import { cn } from "@/lib/utils";
@@ -49,6 +50,7 @@ function usePresence(open: boolean, ms = 250) {
 }
 
 export function AtlasApp() {
+  const [countryHomeOpen, setCountryHomeOpen] = useState(true);
   const [layers, setLayers] = useState<LayerState>(DEFAULT_LAYERS);
   const [activeCountryId, setActiveCountryId] = useState<string | null>(null);
   const [activeGrape, setActiveGrape] = useState<string | null>(null);
@@ -169,6 +171,7 @@ export function AtlasApp() {
   };
 
   const reset = () => {
+    setCountryHomeOpen(true);
     setActiveCountryId(null);
     setActiveGrape(null);
     setSelected(null);
@@ -251,6 +254,17 @@ export function AtlasApp() {
   const toggleLayer = (key: keyof LayerState) => {
     setLayers((prev) => ({ ...prev, [key]: !prev[key] }));
   };
+
+  if (countryHomeOpen) {
+    return (
+      <CountryHome
+        onSelect={(countryId) => {
+          setCountryHomeOpen(false);
+          selectCountry(countryId);
+        }}
+      />
+    );
+  }
 
   return (
     <div className="flex h-dvh w-full flex-col overflow-hidden bg-background">
