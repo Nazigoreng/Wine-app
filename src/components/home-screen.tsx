@@ -1,26 +1,11 @@
+import type { CSSProperties } from "react";
 import { ArrowUpRight } from "lucide-react";
 
 const continents = [
-  {
-    id: "north-america",
-    name: "North America",
-    image: "/continents/north-america.jpg",
-  },
-  {
-    id: "south-america",
-    name: "South America",
-    image: "/continents/south-america.jpg",
-  },
-  {
-    id: "europe",
-    name: "Europe",
-    image: "/continents/europe.jpg",
-  },
-  {
-    id: "australia",
-    name: "Australia",
-    image: "/continents/australia.jpg",
-  },
+  { id: "north-america", name: "North America", image: "/continents/north-america.jpg" },
+  { id: "south-america", name: "South America", image: "/continents/south-america.jpg" },
+  { id: "europe", name: "Europe", image: "/continents/europe.jpg" },
+  { id: "australia", name: "Australia", image: "/continents/australia.jpg" },
 ] as const;
 
 export function HomeScreen() {
@@ -43,7 +28,7 @@ export function HomeScreen() {
             style={{
               "--continent-image": `url("${continent.image}")`,
               "--continent-delay": `${index * 70}ms`,
-            } as React.CSSProperties}
+            } as CSSProperties}
             aria-label={`Open ${continent.name}`}
           >
             <span className="continent-card__wash" />
