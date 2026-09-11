@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { FRANCE_IMAGE } from "@/data/france-image";
 import { ITALY_IMAGE } from "@/data/italy-image";
 import { SPAIN_IMAGE } from "@/data/spain-image";
+import "@/europe.css";
 
 const countries = [
   {
