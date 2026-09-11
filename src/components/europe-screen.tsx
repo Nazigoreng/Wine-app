@@ -1,22 +1,26 @@
+import type { CSSProperties } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { FRANCE_IMAGE } from "@/data/france-image";
+import { ITALY_IMAGE } from "@/data/italy-image";
+import { SPAIN_IMAGE } from "@/data/spain-image";
 
 const countries = [
   {
     id: "france",
     name: "France",
-    image: "/countries/france.jpg",
+    image: FRANCE_IMAGE,
     detail: "Bordeaux · Burgundy · Champagne · Rhône · Loire",
   },
   {
     id: "italy",
     name: "Italy",
-    image: "/countries/italy.jpg",
+    image: ITALY_IMAGE,
     detail: "Piemonte · Toscana · Veneto · Sicilia · Puglia",
   },
   {
     id: "spain",
     name: "Spain",
-    image: "/countries/spain.jpg",
+    image: SPAIN_IMAGE,
     detail: "Rioja · Ribera del Duero · Priorat · Rías Baixas · Jerez",
   },
 ] as const;
@@ -46,7 +50,7 @@ export function EuropeScreen({ onBack }: EuropeScreenProps) {
             key={country.id}
             type="button"
             className="country-card"
-            style={{ "--country-delay": `${index * 90}ms` } as React.CSSProperties}
+            style={{ "--country-delay": `${index * 90}ms` } as CSSProperties}
             aria-label={`Open ${country.name}`}
           >
             <span className="country-card__image-wrap">
