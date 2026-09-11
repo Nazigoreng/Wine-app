@@ -1,5 +1,6 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { EuropeScreen } from "@/components/europe-screen";
 
 const continents = [
   { id: "north-america", name: "North America", image: "/continents/north-america.jpg" },
@@ -9,6 +10,12 @@ const continents = [
 ] as const;
 
 export function HomeScreen() {
+  const [screen, setScreen] = useState<"continents" | "europe">("continents");
+
+  if (screen === "europe") {
+    return <EuropeScreen onBack={() => setScreen("continents")} />;
+  }
+
   return (
     <main className="continent-home">
       <section className="continent-home__intro">
@@ -29,6 +36,9 @@ export function HomeScreen() {
               "--continent-image": `url("${continent.image}")`,
               "--continent-delay": `${index * 70}ms`,
             } as CSSProperties}
+            onClick={() => {
+              if (continent.id === "europe") setScreen("europe");
+            }}
             aria-label={`Open ${continent.name}`}
           >
             <span className="continent-card__wash" />
