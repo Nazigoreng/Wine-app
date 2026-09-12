@@ -1,4 +1,5 @@
-import type { CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { allRegions } from "@/lib/wine";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { FRANCE_IMAGE } from "@/data/france-image";
 import { ITALY_IMAGE } from "@/data/italy-image";
@@ -31,6 +32,58 @@ type EuropeScreenProps = {
 };
 
 export function EuropeScreen({ onBack }: EuropeScreenProps) {
+  const [countryId, setCountryId] = useState<string | null>(null);
+  const [regionId, setRegionId] = useState("");
+  const heading = useRef<HTMLHeadingElement>(null);
+  const country = countries.find((item) => item.id === countryId);
+  const regions = allRegions.filter((region) => region.countryId === countryId);
+  const region = regions.find((item) => item.id === regionId);
+
+  useEffect(() => {
+    if (countryId) heading.current?.focus();
+  }, [countryId]);
+
+  const backToCountries = () => {
+    const previousCountry = countryId;
+    setRegionId("");
+    setCountryId(null);
+    window.requestAnimationFrame(() => document.getElementById(`country-${previousCountry}`)?.focus());
+  };
+
+  if (country) {
+    return (
+      <main className="europe-screen" onKeyDown={(event) => {
+        if (event.key === "Escape") backToCountries();
+      }}>
+        <header className="europe-screen__header">
+          <button type="button" className="europe-back" onClick={backToCountries}>
+            <ArrowLeft size={17} strokeWidth={1.7} /> Europe
+          </button>
+          <p className="continent-home__eyebrow">Europe</p>
+          <h1 ref={heading} tabIndex={-1}>{country.name}</h1>
+        </header>
+        <div className="country-explorer">
+          <img className="country-explorer__map" src={country.image} alt={`${country.name} wine regions map`} />
+          <section className="country-explorer__regions" aria-label={`${country.name} regions`}>
+            <label htmlFor="country-region">Choose a region</label>
+            <select id="country-region" value={regionId} onChange={(event) => setRegionId(event.target.value)}>
+              <option value="">Select a region</option>
+              {regions.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+            </select>
+            {region ? (
+              <article aria-live="polite">
+                <h2>{region.name}</h2>
+                <h3>Climate</h3><p>{region.climate}</p>
+                <h3>Soil</h3><p>{region.soil}</p>
+                <h3>Water</h3><p>{region.water}</p>
+                <h3>Grape varieties</h3><p>{region.vines.join(", ")}</p>
+              </article>
+            ) : <p>Select a region to explore its climate, soil and grape varieties.</p>}
+          </section>
+        </div>
+      </main>
+    );
+  }
   return (
     <main className="europe-screen">
       <header className="europe-screen__header">
@@ -49,6 +102,8 @@ export function EuropeScreen({ onBack }: EuropeScreenProps) {
         {countries.map((country, index) => (
           <button
             key={country.id}
+            id={`country-${country.id}`}
+            onClick={() => { setRegionId(""); setCountryId(country.id); }}
             type="button"
             className="country-card"
             style={{ "--country-delay": `${index * 90}ms` } as CSSProperties}

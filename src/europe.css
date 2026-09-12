@@ -1,3 +1,22 @@
+.country-explorer {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);
+  gap: 24px;
+  align-items: start;
+  color: #182332;
+}
+.country-explorer__map { width: 100%; height: auto; border-radius: 20px; }
+.country-explorer__regions { background: #f7f1e6; padding: 24px; border-radius: 20px; }
+.country-explorer__regions label { display: block; margin-bottom: 8px; font-weight: 600; }
+.country-explorer__regions select { width: 100%; min-height: 44px; padding: 8px; border: 1px solid #71665b; border-radius: 8px; background: #faf6ee; color: #182332; }
+.country-explorer__regions h2 { font-family: var(--font-serif); font-size: 30px; margin-top: 24px; }
+.country-explorer__regions h3 { margin-top: 20px; font-weight: 600; }
+.country-explorer__regions p { font-size: 16px; line-height: 1.6; margin-top: 8px; }
+.country-card:focus-visible, .europe-back:focus-visible { outline: 3px solid #5c1c24; outline-offset: 4px; }
+@media (max-width: 900px) { .country-explorer { grid-template-columns: 1fr; } }
+
 .europe-screen {
   min-height: 100dvh;
   padding: clamp(24px, 4vw, 60px);
