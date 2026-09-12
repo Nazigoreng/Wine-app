@@ -38,6 +38,7 @@ export function EuropeScreen({ onBack }: EuropeScreenProps) {
   const country = countries.find((item) => item.id === countryId);
   const regions = allRegions.filter((region) => region.countryId === countryId);
   const region = regions.find((item) => item.id === regionId);
+  const showChampagneZoom = country?.id === "france" && region?.id === "champagne";
 
   useEffect(() => {
     if (countryId) heading.current?.focus();
@@ -63,7 +64,18 @@ export function EuropeScreen({ onBack }: EuropeScreenProps) {
           <h1 ref={heading} tabIndex={-1}>{country.name}</h1>
         </header>
         <div className="country-explorer">
-          <img className="country-explorer__map" src={country.image} alt={`${country.name} wine regions map`} />
+          <div
+            className={`country-explorer__map-stage${showChampagneZoom ? " is-champagne-zoom" : ""}`}
+            aria-label={showChampagneZoom ? "Animated map zooming from France into Champagne" : undefined}
+          >
+            <img className="country-explorer__map" src={country.image} alt={`${country.name} wine regions map`} />
+            {showChampagneZoom ? (
+              <div className="country-explorer__zoom-caption" aria-hidden="true">
+                <span>France</span>
+                <strong>Champagne</strong>
+              </div>
+            ) : null}
+          </div>
           <section className="country-explorer__regions" aria-label={`${country.name} regions`}>
             <label htmlFor="country-region">Choose a region</label>
             <select id="country-region" value={regionId} onChange={(event) => setRegionId(event.target.value)}>
